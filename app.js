@@ -12,10 +12,9 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 
 const _ = require('lodash');
-
+const md5=require('md5');
 
 const mongoose = require('mongoose');
-const encrypt = require('mongoose-encryption');
 mongoose.connect('mongodb://localhost:27017/secretsDB')
 
 const secretSchema = new mongoose.Schema({
@@ -31,9 +30,6 @@ const secretSchema = new mongoose.Schema({
     }
 });
 
-const sec = "Thisisourlittlesecret.";
-secretSchema.plugin(encrypt,{secret: sec ,encryptedFields: ["password"]});
-
 const Secret = mongoose.model('Secrets',secretSchema);
 
 app.get('/',(req,res)=>{
@@ -46,7 +42,7 @@ app.route('/login')
 })
 .post((req,res)=>{
     const user = req.body.username;
-    const pass = req.body.password;
+    const pass = md5(req.body.password);
 
     Secret.findOne({username:user},(err,result)=>{
         if(!err){
@@ -66,7 +62,7 @@ app.route('/register')
 })
 .post((req,res)=>{
     const user = req.body.username;
-    const pass = req.body.password;
+    const pass = md5(req.body.password);
 
     const userCreate = new Secret({
         username:user,
