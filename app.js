@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const port = 3000;
 const app = express();
@@ -10,6 +12,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 
 const _ = require('lodash');
+
 
 const mongoose = require('mongoose');
 const encrypt = require('mongoose-encryption');
