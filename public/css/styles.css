@@ -14,3 +14,12 @@ body {
   color: #fff;
   background-color: #000;
 }
+
+.social-block:hover{
+  background-color: blanchedalmond;
+}
+
+.deletebtn{
+  position: absolute;
+  right:250px;
+}
